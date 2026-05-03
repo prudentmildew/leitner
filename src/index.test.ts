@@ -100,16 +100,33 @@ describe('createRouter', () => {
     expect(fn).toHaveBeenCalledWith({ name: 'cards', params: {}, path: '/cards' });
   });
 
-  it('navigate to an unmatched path sets Route to null and notifies subscribers', () => {
+  it('navigate to an unmatched path pushes history, sets Route to null, and notifies once', () => {
     const router = make([{ path: '/', name: 'home' }]);
     const fn = vi.fn();
     router.subscribe(fn);
 
+    const before = history.length;
     router.navigate('/missing');
 
+    expect(history.length).toBe(before + 1);
+    expect(location.pathname).toBe('/missing');
     expect(router.get()).toBeNull();
     expect(fn).toHaveBeenCalledTimes(1);
     expect(fn).toHaveBeenCalledWith(null);
+  });
+
+  it('repeat navigate to an unmatched path from null state is a complete no-op', () => {
+    const router = make([{ path: '/', name: 'home' }]);
+    router.navigate('/missing');
+    const fn = vi.fn();
+    router.subscribe(fn);
+
+    const before = history.length;
+    router.navigate('/another-bogus');
+
+    expect(history.length).toBe(before);
+    expect(router.get()).toBeNull();
+    expect(fn).not.toHaveBeenCalled();
   });
 
   it('responds to popstate by recomputing the Route and notifying subscribers', () => {
