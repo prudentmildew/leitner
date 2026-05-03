@@ -1,6 +1,6 @@
 # Navigation semantics polish
 
-Status: needs-triage
+Status: ready-for-human
 
 ## Parent
 
@@ -18,16 +18,16 @@ Concrete behaviors:
 
 ## Acceptance criteria
 
-- [ ] `navigate('/foo', { replace: true })` does not increase `history.length`; subsequent back button does not return to the pre-navigate URL
-- [ ] `navigate('/foo', { replace: true })` still updates state and fires subscribers
-- [ ] `navigate('/cards/42')` while already at the resolved-equivalent Route is a complete no-op: history length unchanged, no subscriber notifications
-- [ ] Same-URL no-op equality compares `name` and `params` only; calling `navigate('/cards/42')` then `navigate('/cards/42/')` (trailing slash variant resolving to same Route) is a no-op the second time
-- [ ] `navigate('/totally-bogus')` against a Router with no catch-all RouteDefinition: history is updated, state becomes `null`, subscribers fire once
-- [ ] Subsequent `navigate('/totally-bogus')` from the unmatched state is a no-op (state is already `null`)
-- [ ] popstate to an unmatched URL: state becomes `null`, subscribers fire once
-- [ ] popstate to a same-as-current resolved Route: subscribers do not fire
-- [ ] Tests for each behavior are in `src/index.test.ts`
-- [ ] Existing tests still pass; `npm test` is green
+- [x] `navigate('/foo', { replace: true })` does not increase `history.length`; subsequent back button does not return to the pre-navigate URL
+- [x] `navigate('/foo', { replace: true })` still updates state and fires subscribers
+- [x] `navigate('/cards/42')` while already at the resolved-equivalent Route is a complete no-op: history length unchanged, no subscriber notifications
+- [x] Same-URL no-op equality compares `name` and `params` only; calling `navigate('/cards/42')` then `navigate('/cards/42/')` (trailing slash variant resolving to same Route) is a no-op the second time
+- [x] `navigate('/totally-bogus')` against a Router with no catch-all RouteDefinition: history is updated, state becomes `null`, subscribers fire once
+- [x] Subsequent `navigate('/totally-bogus')` from the unmatched state is a no-op (state is already `null`)
+- [x] popstate to an unmatched URL: state becomes `null`, subscribers fire once
+- [x] popstate to a same-as-current resolved Route: subscribers do not fire
+- [x] Tests for each behavior are in `src/index.test.ts`
+- [x] Existing tests still pass; `npm test` is green
 
 ## Blocked by
 
