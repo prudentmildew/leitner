@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { createRouter, type Route, type Router } from './index.js';
+import * as matcher from './matcher.js';
 
 let routers: Router[] = [];
 
@@ -132,5 +133,36 @@ describe('createRouter', () => {
     const router = make([{ path: '/cards', name: 'cards' }]);
     router.navigate('/Cards');
     expect(router.get()).toBeNull();
+  });
+
+  it('exposes captured :param values on the matched Route', () => {
+    const router = make([{ path: '/cards/:id', name: 'card' }]);
+    router.navigate('/cards/42');
+    expect(router.get()).toEqual<Route>({
+      name: 'card',
+      params: { id: '42' },
+      path: '/cards/42',
+    });
+  });
+
+  it('compiles each RouteDefinition exactly once at construction, not per navigation', () => {
+    const compileSpy = vi.spyOn(matcher, 'compile');
+    try {
+      const router = make([
+        { path: '/cards/:id', name: 'card' },
+        { path: '/decks/:id', name: 'deck' },
+      ]);
+      expect(compileSpy).toHaveBeenCalledTimes(2);
+      compileSpy.mockClear();
+
+      router.navigate('/cards/1');
+      router.navigate('/cards/2');
+      router.navigate('/decks/3');
+      router.navigate('/missing');
+
+      expect(compileSpy).not.toHaveBeenCalled();
+    } finally {
+      compileSpy.mockRestore();
+    }
   });
 });
