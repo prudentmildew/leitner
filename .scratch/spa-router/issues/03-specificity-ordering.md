@@ -1,6 +1,6 @@
 # Specificity ordering
 
-Status: needs-triage
+Status: ready-for-human
 
 ## Parent
 
@@ -17,13 +17,13 @@ Concrete behaviors:
 
 ## Acceptance criteria
 
-- [ ] An internal `sortBySpecificity(routes)` function exists, is pure, and returns a new array (does not mutate input)
-- [ ] Unit tests cover: `/cards/new` ranks before `/cards/:id`; declaration order is irrelevant to that outcome
-- [ ] Unit tests cover: two equally-specific patterns (e.g. `/cards/:id` and `/users/:id`) preserve declaration order
-- [ ] Unit tests cover: deeper static-vs-param distinctions (e.g. `/a/b/c` vs `/a/:x/c` vs `/a/b/:y` vs `/a/:x/:y`)
-- [ ] Integration test through `createRouter`: declaring `[{path: '/cards/:id', name: 'card'}, {path: '/cards/new', name: 'cardNew'}]` and navigating to `/cards/new` resolves to `name === 'cardNew'`
-- [ ] Existing tests from #01 and #02 still pass
-- [ ] `npm test` is green
+- [x] An internal `sortBySpecificity(routes)` function exists, is pure, and returns a new array (does not mutate input)
+- [x] Unit tests cover: `/cards/new` ranks before `/cards/:id`; declaration order is irrelevant to that outcome
+- [x] Unit tests cover: two equally-specific patterns (e.g. `/cards/:id` and `/users/:id`) preserve declaration order
+- [x] Unit tests cover: deeper static-vs-param distinctions (e.g. `/a/b/c` vs `/a/:x/c` vs `/a/b/:y` vs `/a/:x/:y`)
+- [x] Integration test through `createRouter`: declaring `[{path: '/cards/:id', name: 'card'}, {path: '/cards/new', name: 'cardNew'}]` and navigating to `/cards/new` resolves to `name === 'cardNew'`
+- [x] Existing tests from #01 and #02 still pass
+- [x] `npm test` is green
 
 ## Blocked by
 
