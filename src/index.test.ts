@@ -69,6 +69,19 @@ describe('createRouter', () => {
     expect(fn).not.toHaveBeenCalled();
   });
 
+  it('treats trailing-slash variants of the same resolved Route as a no-op on repeat navigate', () => {
+    const router = make([{ path: '/cards/:id', name: 'card' }]);
+    router.navigate('/cards/42');
+    const fn = vi.fn();
+    router.subscribe(fn);
+
+    const before = history.length;
+    router.navigate('/cards/42/');
+
+    expect(history.length).toBe(before);
+    expect(fn).not.toHaveBeenCalled();
+  });
+
   it('navigate(path, { replace: true }) does not grow history but still updates state and fires subscribers', () => {
     const router = make([
       { path: '/', name: 'home' },
