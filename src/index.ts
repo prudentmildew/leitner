@@ -67,12 +67,15 @@ export function createRouter(routes: readonly RouteDefinition[]): Router {
       };
     },
     navigate: (path, options) => {
+      const next = resolve(path);
+      if (sameRoute(current, next)) return;
       if (options?.replace) {
         window.history.replaceState(null, '', path);
       } else {
         window.history.pushState(null, '', path);
       }
-      update();
+      current = next;
+      for (const listener of listeners) listener(current);
     },
     destroy: () => {
       window.removeEventListener('popstate', onPopState);

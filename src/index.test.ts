@@ -56,6 +56,19 @@ describe('createRouter', () => {
     expect(history.length).toBe(before + 1);
   });
 
+  it('navigate to the resolved-equivalent of the current Route is a complete no-op', () => {
+    const router = make([{ path: '/cards/:id', name: 'card' }]);
+    router.navigate('/cards/42');
+    const fn = vi.fn();
+    router.subscribe(fn);
+
+    const before = history.length;
+    router.navigate('/cards/42');
+
+    expect(history.length).toBe(before);
+    expect(fn).not.toHaveBeenCalled();
+  });
+
   it('navigate(path, { replace: true }) does not grow history but still updates state and fires subscribers', () => {
     const router = make([
       { path: '/', name: 'home' },
