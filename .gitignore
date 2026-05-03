@@ -1,2 +1,4 @@
 .idea/
 leitner.iml
+node_modules/
+dist/
