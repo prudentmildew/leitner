@@ -1,6 +1,6 @@
 # Tracer bullet: package scaffold + minimal Router
 
-Status: ready-for-agent
+Status: ready-for-human
 
 ## Parent
 
@@ -29,23 +29,23 @@ Concrete behaviors:
 
 ## Acceptance criteria
 
-- [ ] `package.json` exists with name `leitner`, type `module`, MIT license, ESM `exports` map gated to the public entry only, and `files` allowlist
-- [ ] `tsconfig.json` matches the settings above; `npm run build` produces `dist/index.{js,d.ts,js.map}` with no other entry leaking
-- [ ] Source split into `src/index.ts`, `src/matcher.ts`, `src/validator.ts`
-- [ ] `createRouter([])` constructs without throwing; `get()` returns `null`; navigation does nothing
-- [ ] `createRouter([{ path: '/', name: 'home' }])` constructs and `get()` returns `{ name: 'home', params: {}, path: '/' }` when the test loads at `/`
-- [ ] `navigate('/foo')` to a path matching a literal RouteDefinition updates state, fires subscribers, and pushes history
-- [ ] `popstate` (back/forward) updates state and fires subscribers
-- [ ] `subscribe(fn)` returns a function that, when called, removes `fn`; `subscribe` does NOT fire `fn` immediately on subscription
-- [ ] `destroy()` removes the popstate listener; subscribers no longer receive updates
-- [ ] Trailing slash normalization: `/cards` and `/cards/` route identically; `/` is preserved as itself
-- [ ] Case-sensitive matching: `/Cards` and `/cards` are distinct (one matches, the other returns `null` if only one is defined)
-- [ ] Validator throws synchronously on: duplicate `name`, duplicate `path`, `path` missing leading slash
-- [ ] Validator unit tests in `src/validator.test.ts` cover each throw case and a happy path
-- [ ] Matcher unit tests in `src/matcher.test.ts` cover literal matches, trailing-slash normalization, case sensitivity, and no-match → `null`
-- [ ] Router integration tests in `src/index.test.ts` cover construction, navigate, popstate, subscribe, unsubscribe, destroy
-- [ ] `npm test` passes with all of the above green
-- [ ] `dist/index.d.ts` exports types `Route`, `RouteDefinition`, `Router` and the `createRouter` function signature
+- [x] `package.json` exists with name `leitner`, type `module`, MIT license, ESM `exports` map gated to the public entry only, and `files` allowlist
+- [x] `tsconfig.json` matches the settings above; `npm run build` produces `dist/index.{js,d.ts,js.map}` with no other entry leaking
+- [x] Source split into `src/index.ts`, `src/matcher.ts`, `src/validator.ts`
+- [x] `createRouter([])` constructs without throwing; `get()` returns `null`; navigation does nothing
+- [x] `createRouter([{ path: '/', name: 'home' }])` constructs and `get()` returns `{ name: 'home', params: {}, path: '/' }` when the test loads at `/`
+- [x] `navigate('/foo')` to a path matching a literal RouteDefinition updates state, fires subscribers, and pushes history
+- [x] `popstate` (back/forward) updates state and fires subscribers
+- [x] `subscribe(fn)` returns a function that, when called, removes `fn`; `subscribe` does NOT fire `fn` immediately on subscription
+- [x] `destroy()` removes the popstate listener; subscribers no longer receive updates
+- [x] Trailing slash normalization: `/cards` and `/cards/` route identically; `/` is preserved as itself
+- [x] Case-sensitive matching: `/Cards` and `/cards` are distinct (one matches, the other returns `null` if only one is defined)
+- [x] Validator throws synchronously on: duplicate `name`, duplicate `path`, `path` missing leading slash
+- [x] Validator unit tests in `src/validator.test.ts` cover each throw case and a happy path
+- [x] Matcher unit tests in `src/matcher.test.ts` cover literal matches, trailing-slash normalization, case sensitivity, and no-match → `null`
+- [x] Router integration tests in `src/index.test.ts` cover construction, navigate, popstate, subscribe, unsubscribe, destroy
+- [x] `npm test` passes with all of the above green
+- [x] `dist/index.d.ts` exports types `Route`, `RouteDefinition`, `Router` and the `createRouter` function signature
 
 ## Blocked by
 
