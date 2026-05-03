@@ -1,6 +1,6 @@
 # Publish-readiness
 
-Status: needs-triage
+Status: ready-for-human
 
 ## Parent
 
@@ -30,15 +30,15 @@ Concrete deliverables:
 
 ## Acceptance criteria
 
-- [ ] `README.md` exists, covers what/what-not, install, minimal example, four-method API, browser support, and links to PRD + both ADRs
-- [ ] `CHANGELOG.md` exists with `Unreleased` and `[0.1.0]` sections, Keep-A-Changelog format
-- [ ] `package.json` has `prepublishOnly` running build + test + smoke
-- [ ] A smoke-check script exists and verifies `createRouter` is exported and produces a Router with `get`, `subscribe`, `navigate`, `destroy` methods of the right type
-- [ ] Running `npm run prepublishOnly` succeeds locally
-- [ ] `npm pack --dry-run` shows the tarball contains only `dist/**`, `README.md`, `LICENSE`, and `package.json` — nothing else
-- [ ] No actual `npm publish` is performed by the agent
-- [ ] Existing test suite still green; `npm test` passes
-- [ ] `package.json` `version` is `0.1.0`
+- [x] `README.md` exists, covers what/what-not, install, minimal example, four-method API, browser support, and links to PRD + both ADRs
+- [x] `CHANGELOG.md` exists with `Unreleased` and `[0.1.0]` sections, Keep-A-Changelog format
+- [x] `package.json` has `prepublishOnly` running build + test + smoke
+- [x] A smoke-check script exists and verifies `createRouter` is exported and produces a Router with `get`, `subscribe`, `navigate`, `destroy` methods of the right type
+- [x] Running `npm run prepublishOnly` succeeds locally
+- [x] `npm pack --dry-run` shows the tarball contains only `dist/**`, `README.md`, `LICENSE`, and `package.json` — nothing else
+- [x] No actual `npm publish` is performed by the agent
+- [x] Existing test suite still green; `npm test` passes
+- [x] `package.json` `version` is `0.1.0`
 
 ## Blocked by
 
