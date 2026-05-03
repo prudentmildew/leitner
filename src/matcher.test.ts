@@ -38,4 +38,40 @@ describe('matcher', () => {
     expect(match(pattern, '/Cards')).toBeNull();
     expect(match(pattern, '/CARDS')).toBeNull();
   });
+
+  it('captures a single :param', () => {
+    const pattern = compile('/cards/:id');
+    expect(match(pattern, '/cards/42')).toEqual({ id: '42' });
+  });
+
+  it('captures multiple :param segments', () => {
+    const pattern = compile('/decks/:deckId/cards/:cardId');
+    expect(match(pattern, '/decks/abc/cards/42')).toEqual({ deckId: 'abc', cardId: '42' });
+  });
+
+  it('decodes percent-encoded ASCII in captured params', () => {
+    const pattern = compile('/cards/:id');
+    expect(match(pattern, '/cards/Hello%20World')).toEqual({ id: 'Hello World' });
+  });
+
+  it('decodes percent-encoded UTF-8 in captured params', () => {
+    const pattern = compile('/cards/:id');
+    expect(match(pattern, '/cards/%E2%98%83')).toEqual({ id: '☃' });
+  });
+
+  it('returns null when a captured param has malformed percent-encoding', () => {
+    const pattern = compile('/cards/:id');
+    expect(match(pattern, '/cards/%E0%A4%A')).toBeNull();
+    expect(match(pattern, '/cards/%')).toBeNull();
+  });
+
+  it.each([
+    ['/cards/:id?', '?'],
+    ['/files/*', '*'],
+    ['/files/:rest+', '+'],
+    ['/cards/(.*)', '('],
+    ['/cards/{id}', '{'],
+  ])('compile throws on extended URLPattern syntax: %s', (path) => {
+    expect(() => compile(path)).toThrow(RangeError);
+  });
 });

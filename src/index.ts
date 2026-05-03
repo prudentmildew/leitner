@@ -1,4 +1,4 @@
-import { compile, match, type Pattern } from './matcher.js';
+import { compile, match } from './matcher.js';
 import { validate } from './validator.js';
 
 export interface RouteDefinition {
@@ -23,7 +23,7 @@ export interface Router {
 
 interface CompiledRoute {
   readonly definition: RouteDefinition;
-  readonly pattern: Pattern;
+  readonly pattern: URLPattern;
 }
 
 export function createRouter(routes: readonly RouteDefinition[]): Router {
