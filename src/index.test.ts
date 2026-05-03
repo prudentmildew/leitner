@@ -145,6 +145,15 @@ describe('createRouter', () => {
     });
   });
 
+  it('prefers a literal segment over a :param segment regardless of declaration order', () => {
+    const router = make([
+      { path: '/cards/:id', name: 'card' },
+      { path: '/cards/new', name: 'cardNew' },
+    ]);
+    router.navigate('/cards/new');
+    expect(router.get()?.name).toBe('cardNew');
+  });
+
   it('compiles each RouteDefinition exactly once at construction, not per navigation', () => {
     const compileSpy = vi.spyOn(matcher, 'compile');
     try {

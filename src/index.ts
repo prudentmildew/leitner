@@ -1,4 +1,5 @@
 import { compile, match } from './matcher.js';
+import { sortBySpecificity } from './specificity.js';
 import { validate } from './validator.js';
 
 export interface RouteDefinition {
@@ -29,7 +30,7 @@ interface CompiledRoute {
 export function createRouter(routes: readonly RouteDefinition[]): Router {
   validate(routes);
 
-  const compiled: CompiledRoute[] = routes.map((definition) => ({
+  const compiled: CompiledRoute[] = sortBySpecificity(routes).map((definition) => ({
     definition,
     pattern: compile(definition.path),
   }));
