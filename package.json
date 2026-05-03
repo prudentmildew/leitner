@@ -18,7 +18,8 @@
   "scripts": {
     "build": "tsc",
     "test": "vitest run",
-    "prepublishOnly": "npm run build && npm test"
+    "smoke": "node scripts/smoke.mjs",
+    "prepublishOnly": "npm run build && npm test && npm run smoke"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",
