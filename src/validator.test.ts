@@ -45,4 +45,20 @@ describe('validate', () => {
       ]),
     ).toThrow(/duplicate.*path|path.*duplicate/i);
   });
+
+  it.each(['/cards/:', '/cards/:/foo'])('throws on anonymous : in %s', (path) => {
+    expect(() => validate([{ path, name: 'x' }])).toThrow(/anonymous|empty.*param|: must be followed/i);
+  });
+
+  it.each([
+    '/cards/:id?',
+    '/files/*',
+    '/files/:rest+',
+    '/cards/(.*)',
+    '/cards/{id}',
+  ])('throws on extended URLPattern syntax in %s', (path) => {
+    expect(() => validate([{ path, name: 'x' }])).toThrow(
+      /literal|:param|not allowed|invalid/i,
+    );
+  });
 });

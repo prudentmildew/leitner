@@ -1,5 +1,8 @@
 import type { RouteDefinition } from './index.js';
 
+const EXTENDED_SYNTAX = /[?*+({]/;
+const ANONYMOUS_PARAM = /(?:^|\/):(?=\/|$)/;
+
 export function validate(routes: readonly RouteDefinition[]): void {
   const seenNames = new Set<string>();
   const seenPaths = new Set<string>();
@@ -7,6 +10,17 @@ export function validate(routes: readonly RouteDefinition[]): void {
     if (!route.path.startsWith('/')) {
       throw new Error(
         `Invalid RouteDefinition path "${route.path}": path must start with a leading slash.`,
+      );
+    }
+    const offending = route.path.match(EXTENDED_SYNTAX);
+    if (offending !== null) {
+      throw new Error(
+        `Invalid RouteDefinition path "${route.path}": "${offending[0]}" is not allowed; only literal segments and :param are supported.`,
+      );
+    }
+    if (ANONYMOUS_PARAM.test(route.path)) {
+      throw new Error(
+        `Invalid RouteDefinition path "${route.path}": anonymous ":" is not allowed; ":" must be followed by a parameter name.`,
       );
     }
     if (seenNames.has(route.name)) {
