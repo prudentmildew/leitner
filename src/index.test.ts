@@ -146,6 +146,35 @@ describe('createRouter', () => {
     expect(fn).toHaveBeenCalledWith({ name: 'home', params: {}, path: '/' });
   });
 
+  it('popstate to an unmatched URL sets Route to null and notifies once', () => {
+    const router = make([
+      { path: '/', name: 'home' },
+      { path: '/cards', name: 'cards' },
+    ]);
+    router.navigate('/cards');
+    const fn = vi.fn();
+    router.subscribe(fn);
+
+    history.replaceState(null, '', '/totally-bogus');
+    window.dispatchEvent(new PopStateEvent('popstate'));
+
+    expect(router.get()).toBeNull();
+    expect(fn).toHaveBeenCalledTimes(1);
+    expect(fn).toHaveBeenCalledWith(null);
+  });
+
+  it('popstate to a URL resolving to the current Route does not fire subscribers', () => {
+    const router = make([{ path: '/cards/:id', name: 'card' }]);
+    router.navigate('/cards/42');
+    const fn = vi.fn();
+    router.subscribe(fn);
+
+    history.replaceState(null, '', '/cards/42/');
+    window.dispatchEvent(new PopStateEvent('popstate'));
+
+    expect(fn).not.toHaveBeenCalled();
+  });
+
   it('subscribe does NOT fire the listener on subscription', () => {
     const router = make([{ path: '/', name: 'home' }]);
     const fn = vi.fn();
