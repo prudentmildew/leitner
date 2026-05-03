@@ -1,6 +1,6 @@
 # `:param` extraction via URLPattern
 
-Status: needs-triage
+Status: ready-for-human
 
 ## Parent
 
@@ -28,17 +28,17 @@ Concrete behaviors:
 
 ## Acceptance criteria
 
-- [ ] Matcher unit tests cover: literal patterns still work; single `:id` capture; multi-param patterns (`/decks/:deckId/cards/:cardId`); each of `?`, `*`, `+`, `(`, `{` causes `compile` to throw
-- [ ] Matcher unit tests cover decoding: `/cards/Hello%20World` against `/cards/:id` yields `params.id === 'Hello World'`
-- [ ] Matcher unit tests cover non-ASCII: a percent-encoded UTF-8 sequence decodes correctly
-- [ ] Matcher unit tests cover malformed: a path with a lone `%` or invalid hex returns `null` instead of throwing
-- [ ] Validator throws on `/cards/:` and on `/cards/:/foo` (anonymous `:`)
-- [ ] Validator throws on each of `/cards/:id?`, `/files/*`, `/files/:rest+`, `/cards/(.*)`, and `/cards/{id}`
-- [ ] Validator happy path still passes for slice-1 literal patterns
-- [ ] Router constructed with `[{ path: '/cards/:id', name: 'card' }]` and a navigation to `/cards/42` produces a Route with `name === 'card'` and `params.id === '42'`
-- [ ] Constructing the Router compiles each pattern exactly once (verify by counting calls or by ensuring runtime cost is per-construction, not per-navigation)
-- [ ] Existing slice-1 tests still pass unchanged
-- [ ] `npm test` is green
+- [x] Matcher unit tests cover: literal patterns still work; single `:id` capture; multi-param patterns (`/decks/:deckId/cards/:cardId`); each of `?`, `*`, `+`, `(`, `{` causes `compile` to throw
+- [x] Matcher unit tests cover decoding: `/cards/Hello%20World` against `/cards/:id` yields `params.id === 'Hello World'`
+- [x] Matcher unit tests cover non-ASCII: a percent-encoded UTF-8 sequence decodes correctly
+- [x] Matcher unit tests cover malformed: a path with a lone `%` or invalid hex returns `null` instead of throwing
+- [x] Validator throws on `/cards/:` and on `/cards/:/foo` (anonymous `:`)
+- [x] Validator throws on each of `/cards/:id?`, `/files/*`, `/files/:rest+`, `/cards/(.*)`, and `/cards/{id}`
+- [x] Validator happy path still passes for slice-1 literal patterns
+- [x] Router constructed with `[{ path: '/cards/:id', name: 'card' }]` and a navigation to `/cards/42` produces a Route with `name === 'card'` and `params.id === '42'`
+- [x] Constructing the Router compiles each pattern exactly once (verify by counting calls or by ensuring runtime cost is per-construction, not per-navigation)
+- [x] Existing slice-1 tests still pass unchanged
+- [x] `npm test` is green
 
 ## Blocked by
 
