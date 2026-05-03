@@ -56,6 +56,24 @@ describe('createRouter', () => {
     expect(history.length).toBe(before + 1);
   });
 
+  it('navigate(path, { replace: true }) does not grow history but still updates state and fires subscribers', () => {
+    const router = make([
+      { path: '/', name: 'home' },
+      { path: '/cards', name: 'cards' },
+    ]);
+    const fn = vi.fn();
+    router.subscribe(fn);
+
+    const before = history.length;
+    router.navigate('/cards', { replace: true });
+
+    expect(history.length).toBe(before);
+    expect(location.pathname).toBe('/cards');
+    expect(router.get()).toEqual<Route>({ name: 'cards', params: {}, path: '/cards' });
+    expect(fn).toHaveBeenCalledTimes(1);
+    expect(fn).toHaveBeenCalledWith({ name: 'cards', params: {}, path: '/cards' });
+  });
+
   it('navigate to an unmatched path sets Route to null and notifies subscribers', () => {
     const router = make([{ path: '/', name: 'home' }]);
     const fn = vi.fn();
