@@ -19,12 +19,12 @@ Add a link to `examples/react/` in the README "Examples" section (create the sec
 
 ## Acceptance criteria
 
-- [ ] `examples/react/use-router.ts` exists and wraps `useSyncExternalStore` around a Router instance
-- [ ] `examples/react/app.tsx` exists and renders different views per route, including a `null` fallback
-- [ ] Inline comments explain each significant step
-- [ ] Files import from `'leitner'` and `'react'`, not relative paths
-- [ ] README.md "Examples" section links to the React example
-- [ ] No new dev dependencies are added to the library's package.json
+- [x] `examples/react/use-router.ts` exists and wraps `useSyncExternalStore` around a Router instance
+- [x] `examples/react/app.tsx` exists and renders different views per route, including a `null` fallback
+- [x] Inline comments explain each significant step
+- [x] Files import from `'leitner'` and `'react'`, not relative paths
+- [x] README.md "Examples" section links to the React example
+- [x] No new dev dependencies are added to the library's package.json
 
 ## Blocked by
 
