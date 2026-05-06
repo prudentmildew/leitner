@@ -57,6 +57,10 @@ router.destroy();
 
 A `Route` is `{ name, params, path }`. `params` is a `Record<string, string>` of `:param` captures, automatically `decodeURIComponent`-ed.
 
+## Examples
+
+- **[Vanilla TypeScript](./examples/vanilla/main.ts)** — Subscribe to route changes, render into the DOM, and handle unmatched URLs with a 404 fallback. No framework required.
+
 ## Browser support
 
 Latest 2 versions of Chrome, Firefox, Safari, and Edge. The matcher is built on the platform [`URLPattern`](https://developer.mozilla.org/docs/Web/API/URLPattern) API, which has the hard floor: Chrome 95+, Edge 95+, Safari 26+, Firefox 142+. No polyfill is shipped.
