@@ -59,8 +59,16 @@ A `Route` is `{ name, params, path }`. `params` is a `Record<string, string>` of
 
 ## Examples
 
-- **[Vanilla TypeScript](./examples/vanilla/main.ts)** — Subscribe to route changes, render into the DOM, and handle unmatched URLs with a 404 fallback. No framework required.
+- **[Vanilla TypeScript](./examples/vanilla/)** — Subscribe to route changes, render into the DOM, and handle unmatched URLs with a 404 fallback. No framework required.
 - **[React](./examples/react/)** — Wrap Router with `useSyncExternalStore` for idiomatic React integration. Includes a reusable hook and a component that re-renders on route change.
+
+Each example is a runnable Vite app. To try one locally:
+
+```sh
+npm install            # at the repo root, once
+cd examples/vanilla    # or examples/react
+npm run dev            # builds Leitner, then starts Vite
+```
 
 ## Browser support
 
