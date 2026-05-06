@@ -15,6 +15,9 @@
     "README.md",
     "LICENSE"
   ],
+  "workspaces": [
+    "examples/*"
+  ],
   "scripts": {
     "build": "tsc",
     "test": "vitest run",
