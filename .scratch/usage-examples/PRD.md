@@ -23,25 +23,30 @@ Add a small `examples/` directory containing two self-contained TypeScript examp
 ## Implementation Decisions
 
 - Examples live in `examples/vanilla/` and `examples/react/` at the repository root.
-- Each example is a single TypeScript file with inline comments — no bundler config, no package.json, no build step.
-- The vanilla example (`examples/vanilla/main.ts`) demonstrates: creating a Router, subscribing to changes, rendering matched Route info into the DOM, handling `null` with a 404 message, calling `navigate` from button click handlers, and calling `destroy` on cleanup.
-- The React example consists of two files: a reusable hook (`examples/react/use-router.ts`) wrapping `useSyncExternalStore`, and an app component (`examples/react/app.tsx`) that uses the hook to switch between views including a fallback for unmatched routes.
-- The README gains a new "Examples" section (between "API" and "Browser support") with one-liner descriptions linking to each example directory.
+- Each example is a fully runnable standalone web app: its own `package.json`, `index.html`, `vite.config.ts`, and source files. A reader clones the repo, runs `npm install` at the root, then `npm run dev` inside an example folder, and the Vite dev server opens the running app.
+- The repo root becomes an npm workspaces root (`"workspaces": ["examples/*"]`). Each example declares `"leitner": "*"` and resolves through the workspace symlink to the package's `dist/` exports — the same shape a real consumer sees.
+- Each example carries a `"predev"` script that runs `npm --prefix ../.. run build` so a single `npm run dev` rebuilds Leitner first and then starts Vite. Readers don't have to remember the order.
+- The vanilla example (`examples/vanilla/main.ts`) demonstrates: creating a Router, subscribing to changes, rendering matched Route info into the DOM, handling `null` with a 404 message, calling `navigate` from button click handlers, and calling `destroy` on cleanup. `index.html` contains the buttons (`#nav-home`, `#nav-cards`, `#nav-card-42`, `#nav-missing`) and the `#app` mount point; the TS file attaches handlers.
+- The React example consists of three files: a reusable hook (`examples/react/use-router.ts`) wrapping `useSyncExternalStore`, an app component (`examples/react/app.tsx`) that uses the hook to switch between views including a fallback for unmatched routes, and a thin entry (`examples/react/main.tsx`) that calls `ReactDOM.createRoot(...).render(<App/>)`. Keeping the mount in a separate file leaves `app.tsx` focused on Leitner usage rather than React boilerplate.
+- The README gains a new "Examples" section (between "API" and "Browser support") with one-liner descriptions linking to each example directory plus a brief run instruction.
 - Examples import from `'leitner'` (the package name), not relative paths, to mirror real consumer usage.
-- No new dev dependencies are added for the examples — they are illustrative, not executable in the repo itself.
+- New dev dependencies are added at the example level: `vite` and `typescript` for both, `@vitejs/plugin-react`, `react`, and `react-dom` for the React example. These do not propagate to the published package (`files` in package.json still only includes `dist`).
+- The decision to use workspaces over `file:` links, a Vite alias to `src/`, or pinned npm versions is recorded in [ADR 0003](../../docs/adr/0003-runnable-examples.md).
 
 ## Testing Decisions
 
 - No automated tests for the example files. They are documentation artifacts, not library code.
+- The `prepublishOnly` smoke check is deliberately *not* extended to build the examples. Drift between the examples and the working tree is accepted as a docs problem caught by humans, not a release gate. The reader is the canary.
 - Correctness of the patterns is ensured by the existing unit test suite which covers all Router behaviour the examples demonstrate.
 - If examples drift out of sync with the API, the fix is a documentation update, not a test failure.
 
 ## Out of Scope
 
-- Runnable dev server or build tooling for the examples (consumers bring their own bundler).
+- Hosted/deployed live previews (no GitHub Pages workflow, no StackBlitz links). Examples are clone-and-run, not click-a-link.
 - Framework adapters beyond the illustrative React hook (Vue, Svelte, Solid, etc.).
 - Examples for features outside Tier 1 (query strings, nested routes, guards, loaders).
 - Publishing the React hook as part of the package exports.
+- Styling. Examples render raw HTML headers and unstyled buttons; the goal is to demonstrate routing, not design.
 
 ## Further Notes
 
