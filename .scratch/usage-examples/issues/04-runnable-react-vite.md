@@ -24,14 +24,14 @@ The example imports from `'leitner'` and `'react'` (package names), resolved thr
 
 ## Acceptance criteria
 
-- [ ] `examples/react/package.json` exists with `"leitner": "file:../.."`, `react`, `react-dom` as dependencies and the `"predev"` script
-- [ ] `examples/react/vite.config.ts`, `tsconfig.json`, and `index.html` exist
-- [ ] `index.html` contains a `#root` element
-- [ ] `examples/react/main.tsx` exists, imports `App` from `./app.tsx`, and mounts it via `ReactDOM.createRoot`
-- [ ] `examples/react/app.tsx` and `examples/react/use-router.ts` are unchanged
-- [ ] After `npm run dev` in `examples/react/`, the app loads in the browser, all four nav buttons navigate, and the unmatched route shows the 404 fallback
-- [ ] README "Examples" section covers running the React example
-- [ ] No Vite alias points at the Leitner `src/`; the example resolves `'leitner'` through the package's `exports` map
+- [x] `examples/react/package.json` exists with `"leitner": "file:../.."`, `react`, `react-dom` as dependencies and the `"predev"` script
+- [x] `examples/react/vite.config.ts`, `tsconfig.json`, and `index.html` exist
+- [x] `index.html` contains a `#root` element
+- [x] `examples/react/main.tsx` exists, imports `App` from `./app.tsx`, and mounts it via `ReactDOM.createRoot`
+- [x] `examples/react/app.tsx` and `examples/react/use-router.ts` are unchanged
+- [x] After `npm run dev` in `examples/react/`, the app loads in the browser, all four nav buttons navigate, and the unmatched route shows the 404 fallback
+- [x] README "Examples" section covers running the React example (the run snippet added in issue 03 already mentions `examples/react`)
+- [x] No Vite alias points at the Leitner `src/`; the example resolves `'leitner'` through the package's `exports` map
 
 ## Blocked by
 
